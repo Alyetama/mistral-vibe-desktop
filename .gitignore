@@ -1,0 +1,12 @@
+# Build output
+build/
+dist/
+
+# Generated icon (rebuilt from scripts/make-icon.sh)
+Resources/AppIcon.icns
+
+# macOS
+.DS_Store
+
+# Swift
+*.swiftmodule
