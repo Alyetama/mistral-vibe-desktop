@@ -57,9 +57,18 @@ echo "==> Assembling bundle"
 cp "$ROOT/Resources/Info.plist" "$APP/Contents/Info.plist"
 [ -f "$ROOT/Resources/AppIcon.icns" ] && cp "$ROOT/Resources/AppIcon.icns" "$RES/AppIcon.icns"
 
-# Ad-hoc codesign so Gatekeeper and WebKit are happy when run locally.
-echo "==> Codesigning (ad-hoc)"
-codesign --force --deep --sign - "$APP" >/dev/null 2>&1 || \
-  echo "    (codesign skipped — app will still run)"
+# Codesign. With a Developer ID identity in SIGN_IDENTITY, sign with the
+# hardened runtime + secure timestamp (required for notarization). Otherwise
+# fall back to an ad-hoc signature that only runs locally.
+if [ -n "${SIGN_IDENTITY:-}" ]; then
+  echo "==> Codesigning (Developer ID: $SIGN_IDENTITY)"
+  codesign --force --deep --options runtime --timestamp \
+    --sign "$SIGN_IDENTITY" "$APP"
+  codesign --verify --strict --verbose=2 "$APP" || true
+else
+  echo "==> Codesigning (ad-hoc — local use only)"
+  codesign --force --deep --sign - "$APP" >/dev/null 2>&1 || \
+    echo "    (codesign skipped — app will still run)"
+fi
 
 echo "==> Done: $APP"

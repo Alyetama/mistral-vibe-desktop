@@ -25,13 +25,21 @@ typical web wrapper.
    [**Releases**](../../releases/latest) page.
 2. Open the `.dmg` and drag **Vibe** into **Applications**.
 
-The app is signed ad-hoc rather than with an Apple Developer ID, so the first
-launch needs Gatekeeper's approval:
+The app is signed ad-hoc rather than with an Apple Developer ID, so macOS
+Gatekeeper asks for confirmation the first time. You only need to do this once.
 
-1. Open **Vibe** from Applications. macOS will refuse the first time.
-2. Go to **System Settings → Privacy & Security**, scroll down, and click
-   **Open Anyway**.
-3. Confirm. macOS remembers the choice for future launches.
+**Easiest — right-click to open:**
+
+1. In **Applications**, right-click (or Control-click) **Vibe** and choose **Open**.
+2. Click **Open** in the dialog. macOS remembers the choice for all future launches.
+
+**Or from the Terminal**, remove the quarantine flag:
+
+```sh
+xattr -dr com.apple.quarantine /Applications/Vibe.app
+```
+
+(You can also approve it under **System Settings → Privacy & Security → Open Anyway**.)
 
 ---
 
@@ -69,11 +77,15 @@ Run it:
 open build/Vibe.app
 ```
 
-Build the installer (`dist/Mistral-<version>.dmg`):
+Build the styled drag-to-install installer (`dist/Vibe-<version>.dmg`):
 
 ```sh
 ./scripts/make-dmg.sh
 ```
+
+The first run may ask for permission to control Finder — that's used to lay out
+the DMG window (background, icon positions). Approve it; if denied, the DMG is
+still produced, just without the custom layout.
 
 Both scripts produce a universal binary by default. To target a single
 architecture, set `ARCHS`:
@@ -86,11 +98,12 @@ ARCHS="x86_64" ./scripts/build.sh    # Intel only
 ### Project layout
 
 ```
-Sources/main.swift      The entire app — window, web view, menus, downloads
-Resources/Info.plist    Bundle metadata (identifier, version, icon)
-scripts/build.sh        Compile and assemble Vibe.app
-scripts/make-dmg.sh     Build the app and package it into a .dmg
-scripts/make-icon.sh    Generate the app icon (Resources/AppIcon.icns)
+Sources/main.swift             The entire app — window, web view, menus, downloads
+Resources/Info.plist           Bundle metadata (identifier, version, icon)
+scripts/build.sh               Compile and assemble Vibe.app
+scripts/make-dmg.sh            Build the app and package it into a styled .dmg
+scripts/make-icon.sh           Generate the app icon (Resources/AppIcon.icns)
+scripts/sign-and-notarize.sh   Developer ID sign + notarize + staple (needs a paid account)
 ```
 
 ### Configuration
@@ -116,9 +129,13 @@ otherwise the script falls back to the system QuickLook renderer.
 This is an unofficial wrapper. It loads the Vibe website and nothing more —
 all functionality, accounts, and terms of service belong to Mistral.
 
-To distribute the app to other Macs without the Gatekeeper prompt, sign it with
-an Apple Developer ID and notarize it. The local build is intentionally
-dependency-free and needs no developer account.
+To distribute the app with **no Gatekeeper prompt at all**, it must be signed
+with an Apple **Developer ID** certificate and notarized by Apple — which
+requires a paid Apple Developer account. Run
+[`scripts/sign-and-notarize.sh`](scripts/sign-and-notarize.sh) (see the comments
+at the top for setup) once you have a certificate. Without that account, the
+ad-hoc build above is the way to go, and users open it once with right-click →
+Open as described in [Install](#install).
 
 ---
 
