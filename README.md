@@ -25,21 +25,19 @@ typical web wrapper.
    [**Releases**](../../releases/latest) page.
 2. Open the `.dmg` and drag **Vibe** into **Applications**.
 
-The app is signed ad-hoc rather than with an Apple Developer ID, so macOS
-Gatekeeper asks for confirmation the first time. You only need to do this once.
+The app is signed ad-hoc rather than with an Apple Developer ID, so the first
+launch needs Gatekeeper's approval. You only need to do this once.
 
-**Easiest — right-click to open:**
+1. Open **Vibe** from Applications. macOS will refuse the first time.
+2. Go to **System Settings → Privacy & Security**, scroll down, and click
+   **Open Anyway**.
+3. Confirm. macOS remembers the choice for future launches.
 
-1. In **Applications**, right-click (or Control-click) **Vibe** and choose **Open**.
-2. Click **Open** in the dialog. macOS remembers the choice for all future launches.
-
-**Or from the Terminal**, remove the quarantine flag:
+Or, from the Terminal, remove the quarantine flag:
 
 ```sh
 xattr -dr com.apple.quarantine /Applications/Vibe.app
 ```
-
-(You can also approve it under **System Settings → Privacy & Security → Open Anyway**.)
 
 ---
 
@@ -134,8 +132,8 @@ with an Apple **Developer ID** certificate and notarized by Apple — which
 requires a paid Apple Developer account. Run
 [`scripts/sign-and-notarize.sh`](scripts/sign-and-notarize.sh) (see the comments
 at the top for setup) once you have a certificate. Without that account, the
-ad-hoc build above is the way to go, and users open it once with right-click →
-Open as described in [Install](#install).
+ad-hoc build above is the way to go, and users approve it once as described in
+[Install](#install).
 
 ---
 
