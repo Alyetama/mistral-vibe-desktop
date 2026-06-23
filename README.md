@@ -101,7 +101,6 @@ Resources/Info.plist           Bundle metadata (identifier, version, icon)
 scripts/build.sh               Compile and assemble Vibe.app
 scripts/make-dmg.sh            Build the app and package it into a styled .dmg
 scripts/make-icon.sh           Generate the app icon (Resources/AppIcon.icns)
-scripts/sign-and-notarize.sh   Developer ID sign + notarize + staple (needs a paid account)
 ```
 
 ### Configuration
@@ -126,14 +125,6 @@ otherwise the script falls back to the system QuickLook renderer.
 
 This is an unofficial wrapper. It loads the Vibe website and nothing more —
 all functionality, accounts, and terms of service belong to Mistral.
-
-To distribute the app with **no Gatekeeper prompt at all**, it must be signed
-with an Apple **Developer ID** certificate and notarized by Apple — which
-requires a paid Apple Developer account. Run
-[`scripts/sign-and-notarize.sh`](scripts/sign-and-notarize.sh) (see the comments
-at the top for setup) once you have a certificate. Without that account, the
-ad-hoc build above is the way to go, and users approve it once as described in
-[Install](#install).
 
 ---
 
