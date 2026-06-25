@@ -7,6 +7,9 @@ built-in WebKit instead of shipping a copy of Chromium. The result is a real
 `.app` that launches instantly, keeps you signed in, and weighs a fraction of a
 typical web wrapper.
 
+**[Website](https://alyetama.github.io/mistral-vibe-desktop/)** ·
+**[Download](../../releases/latest)**
+
 <p align="center">
   <img src="assets/screenshot.png" alt="Mistral Vibe for macOS" width="820">
 </p>
