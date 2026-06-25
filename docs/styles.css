@@ -100,8 +100,22 @@ a { color: inherit; text-decoration: none; }
   border: 1px solid transparent; cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
 }
-.btn--primary { background: var(--grad); color: #1a0c00; box-shadow: 0 14px 40px -20px rgba(250, 80, 15, 0.6); }
-.btn--primary:hover { transform: translateY(-2px); box-shadow: 0 20px 52px -22px rgba(250, 80, 15, 0.7); }
+/* Primary download button — self-contained: no inherited transparent
+   border, crisp gradient edge, subtle gloss, glow contained below. */
+.btn--primary {
+  border: none;
+  color: #2b1100;
+  background-image: linear-gradient(110deg, #ffd23d, #ff9f1c 42%, #fa4f1a);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.40),
+    0 10px 24px -14px rgba(250, 79, 26, 0.55);
+}
+.btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.40),
+    0 16px 34px -14px rgba(250, 79, 26, 0.70);
+}
 .btn--ghost { background: var(--panel); color: var(--text); border-color: var(--border-strong); }
 .btn--ghost:hover { background: #1d1d23; border-color: rgba(255, 255, 255, 0.22); transform: translateY(-2px); }
 .btn svg { width: 18px; height: 18px; }
